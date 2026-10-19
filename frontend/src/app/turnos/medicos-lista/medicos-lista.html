@@ -1,0 +1,50 @@
+<h3>Médicos</h3>
+
+<p-table [value]="medicos()" [loading]="cargando()" [tableStyle]="{ 'min-width': '30rem' }">
+    <ng-template #header>
+        <tr>
+            <th>Médico</th>
+            <th>Matrícula</th>
+            <th>Valor de la consulta</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-medico>
+        <tr>
+            <td>{{ medico.apellidos }}, {{ medico.nombres }}</td>
+            <td>{{ medico.matricula }}</td>
+            <td>{{ medico.valorConsulta | currency:'ARS':'symbol-narrow':'1.0-0' }}</td>
+            <td>
+                <p-button label="Modificar valor" icon="pi pi-pencil" size="small" [outlined]="true"
+                    (onClick)="abrirDialogo(medico)" />
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+        <tr>
+            <td colspan="4">No hay médicos para mostrar.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Modificar valor de la consulta" [(visible)]="dialogoVisible" [modal]="true" [draggable]="false"
+    [style]="{ width: '26rem' }">
+
+    @if (medicoSeleccionado(); as medico) {
+        <div class="formulario">
+            <p>Médico: <strong>{{ medico.apellidos }}, {{ medico.nombres }}</strong></p>
+
+            <label for="valorConsulta">Nuevo valor de la consulta</label>
+            <p-inputnumber inputId="valorConsulta" [formControl]="valorConsulta" mode="currency" currency="ARS"
+                locale="es-AR" [minFractionDigits]="0" [maxFractionDigits]="0" [min]="0" />
+
+            <small>Los turnos ya reservados conservan el valor que tenían al momento de la reserva.</small>
+        </div>
+    }
+
+    <ng-template #footer>
+        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="dialogoVisible.set(false)" />
+        <p-button label="Guardar" icon="pi pi-check" [loading]="guardando()" (onClick)="guardarValorConsulta()" />
+    </ng-template>
+
+</p-dialog>

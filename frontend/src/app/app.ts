@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
 
@@ -8,8 +7,7 @@ import { ToastModule } from 'primeng/toast';
   selector: 'app-root',
   imports: [RouterOutlet, ToastModule],
   templateUrl: './app.html',
-  styleUrl: './app.css',
-  providers: [MessageService]
+  styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('frontend');

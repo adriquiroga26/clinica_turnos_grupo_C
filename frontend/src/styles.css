@@ -9,3 +9,8 @@ body{
 .p-dialog{
     margin: 1rem;
 }
+
+/* Los desplegables de ng-select (appendTo="body") deben verse por encima de los diálogos de PrimeNG */
+body .ng-dropdown-panel{
+    z-index: 100000;
+}

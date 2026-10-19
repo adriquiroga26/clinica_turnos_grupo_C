@@ -1,0 +1,56 @@
+<p-confirmdialog />
+
+<div class="encabezado">
+    <h3>{{ esAdministrador ? "Turnos reservados" : "Mis turnos" }}</h3>
+    <p-button label="Nueva reserva" icon="pi pi-plus" (onClick)="abrirNuevaReserva()" />
+</div>
+
+<div class="filtros">
+    <p-iconfield>
+        <p-inputicon class="pi pi-search" />
+        <input pInputText type="text" [placeholder]="esAdministrador ? 'Buscar por médico o paciente' : 'Buscar por médico'"
+            [ngModel]="textoBusqueda()" (ngModelChange)="textoBusqueda.set($event)" />
+    </p-iconfield>
+    <p-select [options]="estados" [ngModel]="estadoFiltro()" (ngModelChange)="estadoFiltro.set($event)"
+        placeholder="Todos los estados" [showClear]="true" />
+</div>
+
+<p-table [value]="reservasFiltradas()" [loading]="cargando()" [paginator]="true" [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]" [tableStyle]="{ 'min-width': '40rem' }">
+    <ng-template #header>
+        <tr>
+            <th>Fecha y hora</th>
+            <th>Médico</th>
+            @if (esAdministrador) {
+                <th>Paciente</th>
+            }
+            <th>Valor de la consulta</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-reserva>
+        <tr>
+            <td>{{ reserva.fechaHora | date:'dd/MM/yyyy HH:mm' }} hs</td>
+            <td>{{ reserva.medico.apellidos }}, {{ reserva.medico.nombres }} (Mat. {{ reserva.medico.matricula }})</td>
+            @if (esAdministrador) {
+                <td>{{ reserva.paciente.apellidos }}, {{ reserva.paciente.nombres }} (Doc. {{ reserva.paciente.documento }})</td>
+            }
+            <td>{{ reserva.valorConsulta | currency:'ARS':'symbol-narrow':'1.0-0' }}</td>
+            <td><p-tag [value]="reserva.estado" [severity]="severidadDeEstado(reserva.estado)" /></td>
+            <td>
+                @if (puedeCancelar(reserva)) {
+                    <p-button label="Cancelar" icon="pi pi-times" severity="danger" size="small" [outlined]="true"
+                        (onClick)="confirmarCancelacion(reserva)" />
+                }
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+        <tr>
+            <td [attr.colspan]="esAdministrador ? 6 : 5">No hay turnos para mostrar.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<app-reserva-nueva [(visible)]="dialogoNuevaReservaVisible" (reservaCreada)="cargarReservas()" />

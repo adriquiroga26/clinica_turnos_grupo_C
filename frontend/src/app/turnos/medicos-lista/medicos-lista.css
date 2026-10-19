@@ -1,0 +1,17 @@
+h3 {
+    margin-top: 0;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formulario label {
+    font-weight: bold;
+}
+
+.formulario small {
+    color: gray;
+}

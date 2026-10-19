@@ -60,3 +60,9 @@ lerna-debug.log*
 
 # Variables de entorno (contraseñas, secretos)
 #.env
+
+# nginx: logs y archivos temporales generados al ejecutar
+nginx/logs/*
+!nginx/logs/.gitkeep
+nginx/temp/*
+!nginx/temp/.gitkeep

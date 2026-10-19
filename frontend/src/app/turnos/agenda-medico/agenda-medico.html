@@ -1,0 +1,48 @@
+<p-confirmdialog />
+
+<h3>Mi agenda</h3>
+
+<div class="selector-fecha">
+    <p-button icon="pi pi-chevron-left" severity="secondary" [text]="true" ariaLabel="Día anterior"
+        (onClick)="moverFecha(-1)" />
+    <p-datepicker [ngModel]="fecha()" (ngModelChange)="cambiarFecha($event)" dateFormat="dd/mm/yy" [showIcon]="true"
+        [readonlyInput]="true" />
+    <p-button icon="pi pi-chevron-right" severity="secondary" [text]="true" ariaLabel="Día siguiente"
+        (onClick)="moverFecha(1)" />
+    <p-button label="Hoy" severity="secondary" [outlined]="true" (onClick)="cambiarFecha(hoy())" />
+</div>
+
+<p-table [value]="reservas()" [loading]="cargando()" [tableStyle]="{ 'min-width': '40rem' }">
+    <ng-template #header>
+        <tr>
+            <th>Hora</th>
+            <th>Paciente</th>
+            <th>Documento</th>
+            <th>Valor de la consulta</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-reserva>
+        <tr>
+            <td>{{ reserva.fechaHora | date:'HH:mm' }} hs</td>
+            <td>{{ reserva.paciente.apellidos }}, {{ reserva.paciente.nombres }}</td>
+            <td>{{ reserva.paciente.documento }}</td>
+            <td>{{ reserva.valorConsulta | currency:'ARS':'symbol-narrow':'1.0-0' }}</td>
+            <td><p-tag [value]="reserva.estado" [severity]="severidadDeEstado(reserva.estado)" /></td>
+            <td class="acciones">
+                @if (reserva.estado === 'ACTIVO') {
+                    <p-button label="Atendido" icon="pi pi-check" severity="success" size="small"
+                        (onClick)="confirmarAtendido(reserva)" />
+                    <p-button label="Ausente" icon="pi pi-user-minus" severity="warn" size="small"
+                        (onClick)="confirmarAusente(reserva)" />
+                }
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+        <tr>
+            <td colspan="6">No hay turnos reservados para la fecha seleccionada.</td>
+        </tr>
+    </ng-template>
+</p-table>

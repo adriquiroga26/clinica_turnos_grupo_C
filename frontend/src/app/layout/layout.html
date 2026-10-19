@@ -1,0 +1,21 @@
+<header id="barra">
+    <h2 id="titulo">Sistema de turnos - Clínica</h2>
+
+    <nav id="menu">
+        @for (opcion of opcionesMenu; track opcion.ruta) {
+            <a [routerLink]="opcion.ruta" routerLinkActive="activo" class="opcion">
+                <i [class]="opcion.icono"></i> {{ opcion.etiqueta }}
+            </a>
+        }
+    </nav>
+
+    <div id="usuario">
+        <span><i class="pi pi-user"></i> {{ usuario?.documento }} ({{ usuario?.rol }})</span>
+        <p-button label="Cerrar sesión" icon="pi pi-sign-out" severity="secondary" size="small"
+            (onClick)="cerrarSesion()" />
+    </div>
+</header>
+
+<main id="contenido">
+    <router-outlet />
+</main>

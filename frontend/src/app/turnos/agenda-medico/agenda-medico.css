@@ -1,0 +1,16 @@
+h3 {
+    margin-top: 0;
+}
+
+.selector-fecha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.acciones {
+    display: flex;
+    gap: 0.5rem;
+}

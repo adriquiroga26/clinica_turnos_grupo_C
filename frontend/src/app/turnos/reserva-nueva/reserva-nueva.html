@@ -1,0 +1,49 @@
+<p-dialog header="Nueva reserva" [(visible)]="visible" [modal]="true" [draggable]="false" [style]="{ width: '28rem' }"
+    (onShow)="alMostrar()">
+
+    <form [formGroup]="form" class="formulario">
+
+        <div class="campo">
+            <label for="idMedico">Médico</label>
+            <ng-select inputId="idMedico" formControlName="idMedico" [items]="medicos()" bindLabel="etiqueta"
+                bindValue="id" placeholder="Seleccione un médico" notFoundText="No se encontraron médicos"
+                appendTo="body" (change)="alElegirMedico($event)" />
+            @if (medicoElegido(); as medico) {
+                <small>Valor de la consulta: <strong>{{ medico.valorConsulta | currency:'ARS':'symbol-narrow':'1.0-0' }}</strong>
+                    (se congela al momento de reservar)</small>
+            }
+        </div>
+
+        @if (esAdministrador) {
+            <div class="campo">
+                <label for="idPaciente">Paciente</label>
+                <ng-select inputId="idPaciente" formControlName="idPaciente" [items]="pacientes()"
+                    bindLabel="etiqueta" bindValue="id" placeholder="Seleccione un paciente"
+                    notFoundText="No se encontraron pacientes" appendTo="body" />
+            </div>
+        }
+
+        <div class="campo">
+            <label for="fecha">Fecha</label>
+            <p-datepicker inputId="fecha" formControlName="fecha" dateFormat="dd/mm/yy" [minDate]="fechaMinima"
+                [maxDate]="fechaMaxima" [showIcon]="true" [readonlyInput]="true" appendTo="body"
+                placeholder="Seleccione una fecha" />
+            <small>Se puede reservar con hasta 30 días de anticipación.</small>
+        </div>
+
+        <div class="campo">
+            <label for="hora">Horario</label>
+            <p-select inputId="hora" formControlName="hora" [options]="obtenerHoras()" optionLabel="etiqueta"
+                optionValue="valor" placeholder="Seleccione un horario" appendTo="body"
+                emptyMessage="No hay horarios disponibles para la fecha elegida" />
+            <small>Atención de 8hs a 16hs. Cada turno dura una hora.</small>
+        </div>
+
+    </form>
+
+    <ng-template #footer>
+        <p-button label="Cancelar" severity="secondary" [text]="true" (onClick)="visible.set(false)" />
+        <p-button label="Reservar" icon="pi pi-check" [loading]="guardando()" (onClick)="reservar()" />
+    </ng-template>
+
+</p-dialog>

@@ -1,4 +1,5 @@
 import { Component, inject } from "@angular/core";
+import { Router } from "@angular/router";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { LoginApiClient } from "./login-api-client";
@@ -6,6 +7,7 @@ import { AuthStore } from "../auth-store";
 import { Button } from "primeng/button";
 import { Password } from "primeng/password";
 import { InputText } from "primeng/inputtext";
+import { rutaInicialPorRol } from "../../shared/roles";
 
 @Component({
     selector: "app-login",
@@ -20,6 +22,8 @@ export class Login {
     private readonly loginApiClient: LoginApiClient = inject(LoginApiClient);
 
     private readonly authStore: AuthStore = inject(AuthStore);
+
+    private readonly router: Router = inject(Router);
 
     form: FormGroup = new FormGroup({
         documento: new FormControl(null, Validators.required),
@@ -40,8 +44,8 @@ export class Login {
         this.loginApiClient.iniciarSesion(documento, clave).subscribe({
             next: (res) => {
                 this.authStore.guardarToken(res.accessToken);
-                // TODO: navegar a la pantalla principal cuando exista (según el rol del usuario)
                 this.messageService.add({ severity: "success", summary: "Sesión iniciada correctamente" });
+                this.router.navigateByUrl(rutaInicialPorRol(this.authStore.obtenerRol()));
             },
             error: () => {
                 this.messageService.add({ severity: "error", summary: "Ha ocurrido un error al iniciar sesión. Verifique las credenciales ingresadas" });
