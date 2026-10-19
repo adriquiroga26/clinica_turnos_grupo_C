@@ -66,3 +66,6 @@ nginx/logs/*
 !nginx/logs/.gitkeep
 nginx/temp/*
 !nginx/temp/.gitkeep
+
+# Cache de compilacion de TypeScript (se genera sola)
+*.tsbuildinfo
