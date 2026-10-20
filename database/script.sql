@@ -60,3 +60,43 @@ SELECT id, 12345, 15000 FROM usuarios WHERE documento = '20111222';
 -- Usuario paciente de prueba -> documento: 30222333 / clave: paciente123
 INSERT INTO usuarios (documento, apellidos, nombres, email, clave, estado, rol) VALUES
 ('30222333', 'Perez', 'Juan', 'jperez@gmail.com', crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE');
+
+-- =====================================================================
+-- Usuarios de prueba adicionales (total: 5 medicos y 10 pacientes activos)
+-- Todos los medicos usan la clave medico123 y todos los pacientes paciente123.
+-- Esta seccion se puede ejecutar sola (seleccionar desde aca hasta el final y
+-- ejecutar la seleccion en pgAdmin) si la base ya tiene los datos de arriba.
+-- =====================================================================
+
+-- Medicos: primero el usuario (rol MEDICO) y despues sus datos en la tabla medicos
+INSERT INTO usuarios (documento, apellidos, nombres, email, clave, estado, rol) VALUES
+('20222333', 'Ruiz',      'Marta',  'mruiz@clinica.com',      crypt('medico123', gen_salt('bf', 10)), 'ACTIVO', 'MEDICO'),
+('20333444', 'Fernandez', 'Pablo',  'pfernandez@clinica.com', crypt('medico123', gen_salt('bf', 10)), 'ACTIVO', 'MEDICO'),
+('20444555', 'Castro',    'Silvia', 'scastro@clinica.com',    crypt('medico123', gen_salt('bf', 10)), 'ACTIVO', 'MEDICO'),
+('20555666', 'Molina',    'Diego',  'dmolina@clinica.com',    crypt('medico123', gen_salt('bf', 10)), 'ACTIVO', 'MEDICO');
+
+INSERT INTO medicos (id_usuario, matricula, valor_consulta)
+SELECT u.id, d.matricula, d.valor_consulta
+FROM (VALUES
+    ('20222333', 23456, 16000),
+    ('20333444', 34567, 15500),
+    ('20444555', 45678, 17000),
+    ('20555666', 56789, 16500)
+) AS d (documento, matricula, valor_consulta)
+JOIN usuarios u ON u.documento = d.documento;
+
+-- Pacientes (el paciente 10 es Juan Perez, cargado mas arriba)
+INSERT INTO usuarios (documento, apellidos, nombres, email, clave, estado, rol) VALUES
+('31333444', 'Lopez',     'Ana',       'alopez@gmail.com',     crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('31444555', 'Martinez',  'Lucia',     'lmartinez@gmail.com',  crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('32555666', 'Rodriguez', 'Marcos',    'mrodriguez@gmail.com', crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('32666777', 'Sanchez',   'Camila',    'csanchez@gmail.com',   crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('33777888', 'Torres',    'Mateo',     'mtorres@gmail.com',    crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('33888999', 'Romero',    'Valentina', 'vromero@gmail.com',    crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('34111222', 'Alvarez',   'Nicolas',   'nalvarez@gmail.com',   crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('34222333', 'Benitez',   'Sofia',     'sbenitez@gmail.com',   crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE'),
+('35333444', 'Acosta',    'Tomas',     'tacosta@gmail.com',    crypt('paciente123', gen_salt('bf', 10)), 'ACTIVO', 'PACIENTE');
+
+-- Paciente dado de baja (estado BAJA): NO puede iniciar sesion -> documento: 36444555 / clave: paciente123
+INSERT INTO usuarios (documento, apellidos, nombres, email, clave, estado, rol) VALUES
+('36444555', 'Diaz', 'Carlos', 'cdiaz@gmail.com', crypt('paciente123', gen_salt('bf', 10)), 'BAJA', 'PACIENTE');
