@@ -6,6 +6,8 @@ export interface UsuarioToken {
     documento: string;
     sub: number;
     rol: Roles;
+    nombres: string;
+    apellidos: string;
     exp?: number;
 }
 

@@ -4,6 +4,25 @@
 body{
     margin: 0;
     background-color: lightyellow;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Botón "Cerrar sesión" del encabezado: fondo blanco con borde y texto oscuros para que se lea bien */
+.p-button.boton-salir{
+    background: #ffffff;
+    border: 1px solid #8fbfc0;
+    color: #12343b;
+}
+
+.p-button.boton-salir:not(:disabled):hover{
+    background: #eaf7f7;
+    border-color: #6aa9ab;
+    color: #12343b;
+}
+
+/* Los componentes de PrimeNG usan la misma tipografía que el resto de la aplicación */
+.p-component{
+    font-family: inherit;
 }
 
 .p-dialog{

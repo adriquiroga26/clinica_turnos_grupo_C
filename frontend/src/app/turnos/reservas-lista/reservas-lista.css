@@ -1,3 +1,17 @@
+.volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #0b7a58;
+    text-decoration: none;
+}
+
+.volver:hover {
+    text-decoration: underline;
+}
+
 .encabezado {
     display: flex;
     align-items: center;

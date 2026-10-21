@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { CurrencyPipe } from "@angular/common";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
+import { RouterLink } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { Button } from "primeng/button";
 import { Dialog } from "primeng/dialog";
@@ -14,7 +15,7 @@ import { MedicosApiClient } from "../medicos-api-client";
     selector: "app-medicos-lista",
     templateUrl: "./medicos-lista.html",
     styleUrl: "./medicos-lista.css",
-    imports: [CurrencyPipe, ReactiveFormsModule, TableModule, Button, Dialog, InputNumber]
+    imports: [CurrencyPipe, ReactiveFormsModule, RouterLink, TableModule, Button, Dialog, InputNumber]
 })
 export class MedicosLista implements OnInit {
 

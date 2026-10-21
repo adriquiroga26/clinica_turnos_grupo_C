@@ -1,44 +1,66 @@
 #barra {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1.5rem;
-    background-color: lightcyan;
-    border-bottom: 1px solid #b0e0e6;
-}
-
-#titulo {
-    margin: 0;
-}
-
-#menu {
-    display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    flex: 1;
+    gap: 1rem;
+    min-height: 4.5rem;
+    padding: 0 1.75rem;
+    background-color: #d9f4f4;
+    border-bottom: 1px solid #b7e3e3;
 }
 
-.opcion {
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    color: inherit;
+#marca {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #12343b;
     text-decoration: none;
 }
 
-.opcion:hover {
-    background-color: white;
+#logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 10px;
+    background-color: #10b981;
+    color: #ffffff;
+    font-size: 1.4rem;
 }
 
-.opcion.activo {
-    background-color: white;
-    font-weight: bold;
+#titulo {
+    font-size: 1.4rem;
+    font-weight: 500;
 }
 
 #usuario {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
+}
+
+.persona {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: #12343b;
+}
+
+.persona > i {
+    font-size: 1.5rem;
+    color: #0b7a58;
+}
+
+.nombre {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.documento {
+    font-size: 0.8rem;
+    color: #2c5560;
 }
 
 #contenido {

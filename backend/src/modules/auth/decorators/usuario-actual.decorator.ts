@@ -5,6 +5,8 @@ export interface UsuarioToken {
     documento: string;
     sub: number;
     rol: RolesUsuariosEnum;
+    nombres: string;
+    apellidos: string;
 }
 
 export const UsuarioActual = createParamDecorator(

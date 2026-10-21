@@ -1,5 +1,9 @@
 <p-confirmdialog />
 
+@if (esAdministrador) {
+    <a class="volver" routerLink="/inicio"><i class="pi pi-arrow-left"></i> Volver al inicio</a>
+}
+
 <div class="encabezado">
     <h3>{{ esAdministrador ? "Turnos reservados" : "Mis turnos" }}</h3>
     <p-button label="Nueva reserva" icon="pi pi-plus" (onClick)="abrirNuevaReserva()" />

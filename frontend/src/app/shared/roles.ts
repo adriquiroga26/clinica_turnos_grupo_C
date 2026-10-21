@@ -15,7 +15,7 @@ export function rutaInicialPorRol(rol: Roles | null): string {
         case Roles.MEDICO:
             return "/agenda";
         case Roles.ADMINISTRADOR:
-            return "/reservas";
+            return "/inicio";
         default:
             return "/login";
     }

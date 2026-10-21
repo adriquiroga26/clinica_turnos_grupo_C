@@ -1,6 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from "@angular/core";
 import { CurrencyPipe, DatePipe } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { RouterLink } from "@angular/router";
 import { ConfirmationService, MessageService } from "primeng/api";
 import { Button } from "primeng/button";
 import { ConfirmDialog } from "primeng/confirmdialog";
@@ -22,7 +23,7 @@ import { ReservaNueva } from "../reserva-nueva/reserva-nueva";
     selector: "app-reservas-lista",
     templateUrl: "./reservas-lista.html",
     styleUrl: "./reservas-lista.css",
-    imports: [DatePipe, CurrencyPipe, FormsModule, TableModule, Button, Tag, Select, InputText, IconField, InputIcon,
+    imports: [DatePipe, CurrencyPipe, FormsModule, RouterLink, TableModule, Button, Tag, Select, InputText, IconField, InputIcon,
         ConfirmDialog, ReservaNueva],
     providers: [ConfirmationService]
 })

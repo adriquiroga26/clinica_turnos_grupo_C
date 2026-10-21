@@ -1,20 +1,14 @@
 import { Component, inject } from "@angular/core";
-import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
+import { RouterLink, RouterOutlet } from "@angular/router";
 import { Button } from "primeng/button";
 import { AuthStore, UsuarioToken } from "../auth/auth-store";
-import { Roles } from "../shared/roles";
-
-interface OpcionMenu {
-    etiqueta: string;
-    ruta: string;
-    icono: string;
-}
+import { Roles, rutaInicialPorRol } from "../shared/roles";
 
 @Component({
     selector: "app-layout",
     templateUrl: "./layout.html",
     styleUrl: "./layout.css",
-    imports: [RouterOutlet, RouterLink, RouterLinkActive, Button]
+    imports: [RouterOutlet, RouterLink, Button]
 })
 export class Layout {
 
@@ -22,30 +16,18 @@ export class Layout {
 
     readonly usuario: UsuarioToken | null = this.authStore.obtenerUsuario();
 
-    readonly opcionesMenu: OpcionMenu[] = this.obtenerOpcionesMenu();
+    /** Al tocar el título se vuelve a la pantalla de inicio del rol. */
+    readonly rutaInicio: string = rutaInicialPorRol(this.usuario?.rol ?? null);
+
+    readonly esAdministrador: boolean = this.usuario?.rol === Roles.ADMINISTRADOR;
+
+    /** Antes del nombre se indica el tipo de usuario: "Paciente:" o "Profesional:". */
+    readonly prefijoRol: string = this.usuario?.rol === Roles.MEDICO ? "Profesional:" : "Paciente:";
+
+    readonly nombreCompleto: string = `${this.usuario?.nombres ?? ""} ${this.usuario?.apellidos ?? ""}`.trim();
 
     cerrarSesion(): void {
         this.authStore.cerrarSesion();
-    }
-
-    /**
-     * Cada rol ve únicamente las opciones que tiene habilitadas.
-     */
-    private obtenerOpcionesMenu(): OpcionMenu[] {
-
-        switch (this.usuario?.rol) {
-            case Roles.PACIENTE:
-                return [{ etiqueta: "Mis turnos", ruta: "/mis-turnos", icono: "pi pi-calendar" }];
-            case Roles.MEDICO:
-                return [{ etiqueta: "Mi agenda", ruta: "/agenda", icono: "pi pi-calendar" }];
-            case Roles.ADMINISTRADOR:
-                return [
-                    { etiqueta: "Turnos", ruta: "/reservas", icono: "pi pi-calendar" },
-                    { etiqueta: "Médicos", ruta: "/medicos", icono: "pi pi-user" }
-                ];
-            default:
-                return [];
-        }
     }
 
 }

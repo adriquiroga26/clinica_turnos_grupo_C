@@ -1,18 +1,25 @@
 <header id="barra">
-    <h2 id="titulo">Sistema de turnos - Clínica</h2>
-
-    <nav id="menu">
-        @for (opcion of opcionesMenu; track opcion.ruta) {
-            <a [routerLink]="opcion.ruta" routerLinkActive="activo" class="opcion">
-                <i [class]="opcion.icono"></i> {{ opcion.etiqueta }}
-            </a>
-        }
-    </nav>
+    <a id="marca" [routerLink]="rutaInicio">
+        <span id="logo"><i class="pi pi-heart"></i></span>
+        <span id="titulo">Sistema de Turnos</span>
+    </a>
 
     <div id="usuario">
-        <span><i class="pi pi-user"></i> {{ usuario?.documento }} ({{ usuario?.rol }})</span>
-        <p-button label="Cerrar sesión" icon="pi pi-sign-out" severity="secondary" size="small"
-            (onClick)="cerrarSesion()" />
+        @if (esAdministrador) {
+            <div class="persona">
+                <i class="pi pi-shield"></i>
+                <span class="nombre">Administrador</span>
+            </div>
+        } @else {
+            <div class="persona">
+                <i class="pi pi-user"></i>
+                <div>
+                    <div class="nombre">{{ prefijoRol }} {{ nombreCompleto }}</div>
+                    <div class="documento">DNI {{ usuario?.documento }}</div>
+                </div>
+            </div>
+        }
+        <p-button label="Cerrar sesión" icon="pi pi-sign-out" styleClass="boton-salir" (onClick)="cerrarSesion()" />
     </div>
 </header>
 

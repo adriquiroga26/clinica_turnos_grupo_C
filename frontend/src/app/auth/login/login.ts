@@ -7,13 +7,15 @@ import { AuthStore } from "../auth-store";
 import { Button } from "primeng/button";
 import { Password } from "primeng/password";
 import { InputText } from "primeng/inputtext";
+import { IconField } from "primeng/iconfield";
+import { InputIcon } from "primeng/inputicon";
 import { rutaInicialPorRol } from "../../shared/roles";
 
 @Component({
     selector: "app-login",
     templateUrl: "./login.html",
     styleUrl: "./login.css",
-    imports: [ReactiveFormsModule, InputText, Password, Button]
+    imports: [ReactiveFormsModule, InputText, Password, Button, IconField, InputIcon]
 })
 export class Login {
 
